@@ -32,6 +32,8 @@ public class ShoppingCartImpl implements ShoppingCart{
 		if (isNewItem) {
 			productsList.add(product);
 		}
+		applyDiscountOffer(addedItem);
+
 	}
 
 	@Override
@@ -59,4 +61,24 @@ public class ShoppingCartImpl implements ShoppingCart{
 		productsList.clear();
 
 	}
+
+	private void applyDiscountOffer(Product item) {			
+		int qty = item.getQuantity();
+		double unitPrice = item.getUnitPrice();
+		int freeQty = 0;
+		switch (item.getName()) {
+		case "apple":
+			freeQty = (int) qty / 2; // BUY ONE GET ONE FREE
+			break;
+		case "orange":
+			freeQty = (int) qty / 3; // BUY THREE GET ONE FREE
+			break;
+		default:
+			break;
+		}
+
+		double discount = freeQty * unitPrice;
+		item.setDiscount(discount);
+	}
+
 }
